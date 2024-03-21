@@ -10,8 +10,7 @@ vector<int> solution(vector<string> name, vector<int> yearning, vector<vector<st
     for(int i = 0; i < photo.size(); i++){
         int totalscore = 0;
         for(int j = 0; j < name.size(); j++){
-            auto it = find(photo[i].begin(),photo[i].end(),name[j]);
-            if(it != photo[i].end()){
+            if(find(photo[i].begin(),photo[i].end(),name[j]) != photo[i].end()){
                 totalscore += yearning[j];
             }
         }
