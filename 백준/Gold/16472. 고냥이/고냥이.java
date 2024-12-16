@@ -27,11 +27,17 @@ public class Main {
     static void add(char x) { // x 라는 알파벳 추가
         /* TODO */
         cnt[x-'a']++;
+        if (cnt[x-'a'] == 1) {
+            kind++;
+        }
     }
 
     static void erase(char x) { // x 라는 알파벳 제거
         /* TODO */
         cnt[x-'a']--;
+        if (cnt[x-'a'] == 0) {
+            kind--;
+        }
     }
 
     static void pro() {
@@ -43,16 +49,9 @@ public class Main {
 
             // 불가능하면, 가능할 때까지 L을 이동
             /* TODO */
-            while(true) {
-                kind = 0;
-                for (int i = 0; i < 26; i++) {
-                    if (cnt[i] != 0) kind++;
-                }
-                if (kind <= N) break;
-                erase(A.charAt(L));
-                L++;
+            while (kind > N) {
+                erase(A.charAt(L++));
             }
-
             // 정답 갱신
             /* TODO */
             ans = Math.max(ans, R - L + 1);
