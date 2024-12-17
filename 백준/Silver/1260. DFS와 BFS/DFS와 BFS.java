@@ -3,6 +3,8 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.StringTokenizer;
@@ -11,7 +13,7 @@ public class Main {
     static StringBuilder sb = new StringBuilder();
 
     static int N, M, V;
-    static int[][] adj;
+    static ArrayList<Integer>[] adj;
     static boolean[] visit;
 
     static void input() throws IOException {
@@ -22,13 +24,19 @@ public class Main {
         N = Integer.parseInt(st.nextToken());
         M = Integer.parseInt(st.nextToken());
         V = Integer.parseInt(st.nextToken());
-        adj = new int[N + 1][N + 1];
+        adj = new ArrayList[N + 1];
+        for (int i = 1; i <= N; i++) {
+            adj[i] = new ArrayList<>();
+        }
         for (int i = 1; i <= M; i++) {
             st = new StringTokenizer(br.readLine());
             int x = Integer.parseInt(st.nextToken());
             int y = Integer.parseInt(st.nextToken());
-            adj[x][y] = 1;
-            adj[y][x] = 1;
+            adj[x].add(y);
+            adj[y].add(x);
+        }
+        for (int i = 1; i <= N; i++) {
+            Collections.sort(adj[i]);
         }
     }
 
@@ -37,8 +45,7 @@ public class Main {
         /* TODO */
         visit[x] = true;
         sb.append(x).append(' ');
-        for (int y = 1; y <= N; y++) {
-            if (adj[x][y] == 0) continue;
+        for (int y : adj[x]) {
             if (visit[y]) continue;
             dfs(y);
         }
@@ -55,8 +62,7 @@ public class Main {
         while(!que.isEmpty()) {
             start = que.poll();
             sb.append(start).append(' ');
-            for (int y = 1; y <= N; y++) {
-                if (adj[start][y] == 0) continue;
+            for (int y : adj[start]) {
                 if (visit[y]) continue;
 
                 que.add(y);
